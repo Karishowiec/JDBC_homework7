@@ -21,7 +21,7 @@ public class DatabaseQueryService {
         List<MaxSalaryWorker> result = new ArrayList<>();
         String sql = new String(Files.readAllBytes(Paths.get("sql/find_max_salary_worker.sql")));
         Connection connection = Database.getInstance().getConnection();
-        try (Statement statement = connection.createStatement()){
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()){
                 result.add(new MaxSalaryWorker(resultSet.getInt("salary"), resultSet.getString("name")));
@@ -36,7 +36,7 @@ public class DatabaseQueryService {
         List<LongestProject> result = new ArrayList<>();
         String sql = new String(Files.readAllBytes(Paths.get("sql/find_longest_project.sql")));
         Connection connection = Database.getInstance().getConnection();
-        try (Statement statement = connection.createStatement()){
+        try (PreparedStatement statement = connection.prepareStatement(sql))){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()){
                 result.add(new LongestProject(resultSet.getInt("id"), resultSet.getInt("duration_months")));
@@ -51,7 +51,7 @@ public class DatabaseQueryService {
         List<MaxProjectClient> result = new ArrayList<>();
         String sql = new String(Files.readAllBytes(Paths.get("sql/find_max_projects_client.sql")));
         Connection connection = Database.getInstance().getConnection();
-        try (Statement statement = connection.createStatement()){
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()){
                 result.add(new MaxProjectClient(resultSet.getString("name"), resultSet.getInt("project_count")));
@@ -67,7 +67,7 @@ public class DatabaseQueryService {
         List<Worker> result = new ArrayList<>();
         String sql = new String(Files.readAllBytes(Paths.get("sql/find_youngest_eldest_workers.sql")));
         Connection connection = Database.getInstance().getConnection();
-        try (Statement statement = connection.createStatement()){
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()){
                 result.add(new Worker(resultSet.getString("type"), resultSet.getString("name"), resultSet.getObject("BIRTHDAY", LocalDate.class)));

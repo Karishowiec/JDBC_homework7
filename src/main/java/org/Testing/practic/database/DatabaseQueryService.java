@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class DatabaseQueryService {
         String sql = new String(Files.readAllBytes(Paths.get("sql/find_max_salary_worker.sql")));
         Connection connection = Database.getInstance().getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)){
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 result.add(new MaxSalaryWorker(resultSet.getInt("salary"), resultSet.getString("name")));
             }
@@ -37,7 +36,7 @@ public class DatabaseQueryService {
         String sql = new String(Files.readAllBytes(Paths.get("sql/find_longest_project.sql")));
         Connection connection = Database.getInstance().getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql))){
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 result.add(new LongestProject(resultSet.getInt("id"), resultSet.getInt("duration_months")));
             }
@@ -52,7 +51,7 @@ public class DatabaseQueryService {
         String sql = new String(Files.readAllBytes(Paths.get("sql/find_max_projects_client.sql")));
         Connection connection = Database.getInstance().getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)){
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 result.add(new MaxProjectClient(resultSet.getString("name"), resultSet.getInt("project_count")));
             }
@@ -68,7 +67,7 @@ public class DatabaseQueryService {
         String sql = new String(Files.readAllBytes(Paths.get("sql/find_youngest_eldest_workers.sql")));
         Connection connection = Database.getInstance().getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)){
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 result.add(new Worker(resultSet.getString("type"), resultSet.getString("name"), resultSet.getObject("BIRTHDAY", LocalDate.class)));
             }
